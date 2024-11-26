@@ -18,10 +18,10 @@ func From(ba []byte) Ldr {
 	return Ldr(valAsSlice)
 }
 
-func (l Ldr) BaseAddress() int {
-	addrAscii := make([]byte, 5)
-	copy(addrAscii, l[12:17])
-	val, err := strconv.Atoi(string(addrAscii))
+func (l Ldr) BaseAddr() int {
+	addrASCII := make([]byte, 5)
+	copy(addrASCII, l[12:17])
+	val, err := strconv.Atoi(string(addrASCII))
 	if err != nil {
 		fmt.Printf("Not a number")
 		os.Exit(1)
@@ -30,9 +30,9 @@ func (l Ldr) BaseAddress() int {
 }
 
 func (l Ldr) RecLen() int {
-	addrAscii := make([]byte, 5)
-	copy(addrAscii, l[:5])
-	val, err := strconv.Atoi(string(addrAscii))
+	addrASCII := make([]byte, 5)
+	copy(addrASCII, l[:5])
+	val, err := strconv.Atoi(string(addrASCII))
 	if err != nil {
 		fmt.Printf("Not a number")
 		os.Exit(1)
