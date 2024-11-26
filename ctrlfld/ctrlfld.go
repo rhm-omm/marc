@@ -19,3 +19,9 @@ var CfMap = make(map[int]string)
 func ValueOf(tag int) string {
 	return CfMap[tag]
 }
+
+func (cf CtrlFld) MARCrepr() []byte {
+	var repr = make([]byte, len(cf.value))
+	copy(repr, cf.value)
+	return repr
+}
