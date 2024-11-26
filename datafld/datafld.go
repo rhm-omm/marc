@@ -14,3 +14,5 @@ type DataFld struct {
 }
 
 var dfMap = make(map[int]DataFld)
+
+func 

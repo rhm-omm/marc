@@ -27,7 +27,7 @@ func (cf CtrlFld) Value() string {
 var CfMap = make(map[int]CtrlFld)
 
 // Return the control field with a specified tag
-func ValueOf(tag int) CtrlFld {
+func FldWithTag(tag int) CtrlFld {
 	if tag < 0 || tag >= 100 {
 		fmt.Println("Not a control field tag")
 		os.Exit(1)
