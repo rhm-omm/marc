@@ -29,6 +29,7 @@ func CtrlFldFrom(tag int, MARCrec []byte) CtrlFld {
 	base := l.BaseAddr()
 	value := MARCrec[base+start : base+start+len-1]
 	cf.value = value
+	cfMap[cf.tag] = cf
 
 	return cf
 }
