@@ -45,7 +45,9 @@ func DirFrom(MARCrec []byte) Directory {
 			os.Exit(1)
 		}
 		e.startpos = s
-		// Append entry to directory, and repeat
+		// Add to map
+		fldMap[e.tag] = e
+		// Add entry to directory, and repeat
 		dir = append(dir, e)
 	}
 	return dir
