@@ -9,7 +9,7 @@ const SUBFLD_DELIMITER byte = 0x1F
 
 type SubFld struct {
 	tag     byte
-	content string
+	content []byte
 }
 
 type DataFld struct {
