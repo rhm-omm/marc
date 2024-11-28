@@ -20,7 +20,7 @@ func DirFrom(MARCrec []byte) Directory {
 	// Get base address from leader
 	l := ldr.LdrFrom(MARCrec)
 	baseAddr := l.BaseAddr()
-	// Create the slice that defines the directory
+	// Create the slice that contains the directory
 	dirSrc := MARCrec[24:baseAddr] // Includes field terminator
 	// Create Directory vbl
 	var dir []entry
@@ -45,7 +45,7 @@ func DirFrom(MARCrec []byte) Directory {
 			os.Exit(1)
 		}
 		e.startpos = s
-		// Add to map
+		// Update map
 		fldMap[e.tag] = e
 		// Add entry to directory, and repeat
 		dir = append(dir, e)

@@ -27,7 +27,7 @@ func CtrlFldFrom(tag int, MARCrec []byte) CtrlFld {
 	len := directory.FldLen(tag)
 	l := ldr.LdrFrom(MARCrec)
 	base := l.BaseAddr()
-	value := MARCrec[base+start : base+start+len-1]
+	value := MARCrec[base+start : base+start+len-1] // Omit field terminator
 	cf.value = value
 	cfMap[cf.tag] = cf
 
