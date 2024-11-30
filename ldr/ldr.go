@@ -1,3 +1,4 @@
+// Package ldr provides means to extract and use MARC record leaders
 package ldr
 
 import (
@@ -6,7 +7,6 @@ import (
 	"strconv"
 )
 
-// MARC record leader
 type Ldr [24]byte
 
 // Extract the leader from a MARC record

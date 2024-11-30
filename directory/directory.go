@@ -23,7 +23,7 @@ func DirFrom(MARCrec []byte) Directory {
 	// Create the slice that contains the directory
 	dirSrc := MARCrec[24:baseAddr] // Includes field terminator
 	// Create Directory vbl
-	var dir []entry
+	var dir Directory
 	// Loop through the bytes, filling out the entry struct
 	for i := 0; i < baseAddr; i += 12 {
 		var e entry

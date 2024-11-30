@@ -16,7 +16,7 @@ type CtrlFld struct {
 }
 
 func CtrlFldFrom(tag int, MARCrec []byte) CtrlFld {
-	if tag <= 100 {
+	if tag < 0 || tag >= 100 {
 		fmt.Println("Not a control field tag")
 		os.Exit(1)
 	}
