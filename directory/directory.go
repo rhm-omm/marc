@@ -9,9 +9,9 @@ import (
 )
 
 type entry struct {
-	tag      int
-	fldlen   int
-	startpos int
+	tag    int
+	fldlen int
+	fldofs int
 }
 
 type Directory []entry
@@ -45,9 +45,7 @@ func DirFrom(MARCrec []byte) Directory {
 			fmt.Println("Starting position not a number")
 			os.Exit(1)
 		}
-		e.startpos = s
-		//	fmt.Println(e)
-		//	fmt.Println(i)
+		e.fldofs = s
 		// Update map
 		fldMap[e.tag] = e
 		// Add entry to directory, and repeat
@@ -67,7 +65,7 @@ func (d Directory) FldLen(tag int) int {
 	return entry.fldlen
 }
 
-func (d Directory) FldStart(tag int) int {
+func (d Directory) FldOfs(tag int) int {
 	entry := d.entryFor(tag)
-	return entry.startpos
+	return entry.fldofs
 }
