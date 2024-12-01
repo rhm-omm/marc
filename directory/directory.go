@@ -21,11 +21,12 @@ func DirFrom(MARCrec []byte) Directory {
 	l := ldr.LdrFrom(MARCrec)
 	baseAddr := l.BaseAddr()
 	// Create the slice that contains the directory
-	dirSrc := MARCrec[24:baseAddr] // Includes field terminator
+	dirSrc := MARCrec[24:baseAddr]
+	//	fmt.Println(len(dirSrc))
 	// Create Directory vbl
 	var dir Directory
 	// Loop through the bytes, filling out the entry struct
-	for i := 0; i < baseAddr; i += 12 {
+	for i := 0; i < len(dirSrc)-1; i += 12 {
 		var e entry
 		t, err := strconv.Atoi(string(dirSrc[i : i+3]))
 		if err != nil {
@@ -45,6 +46,8 @@ func DirFrom(MARCrec []byte) Directory {
 			os.Exit(1)
 		}
 		e.startpos = s
+		//	fmt.Println(e)
+		//	fmt.Println(i)
 		// Update map
 		fldMap[e.tag] = e
 		// Add entry to directory, and repeat
@@ -55,16 +58,16 @@ func DirFrom(MARCrec []byte) Directory {
 
 var fldMap = make(map[int]entry)
 
-func entryFor(tag int) entry {
+func (d Directory) entryFor(tag int) entry {
 	return fldMap[tag]
 }
 
-func FldLen(tag int) int {
-	entry := entryFor(tag)
+func (d Directory) FldLen(tag int) int {
+	entry := d.entryFor(tag)
 	return entry.fldlen
 }
 
-func FldStart(tag int) int {
-	entry := entryFor(tag)
+func (d Directory) FldStart(tag int) int {
+	entry := d.entryFor(tag)
 	return entry.startpos
 }
