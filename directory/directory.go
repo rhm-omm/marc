@@ -22,7 +22,6 @@ func DirFrom(MARCrec []byte) Directory {
 	baseAddr := l.BaseAddr()
 	// Create the slice that contains the directory
 	dirSrc := MARCrec[24:baseAddr]
-	//	fmt.Println(len(dirSrc))
 	// Create Directory vbl
 	var dir Directory
 	// Loop through the bytes, filling out the entry struct
@@ -47,25 +46,45 @@ func DirFrom(MARCrec []byte) Directory {
 		}
 		e.fldofs = s
 		// Update map
-		fldMap[e.tag] = e
-		// Add entry to directory, and repeat
+		v, ok := fldMap[e.tag]
+		// If no value for tag, make one and add it
+		if !ok {
+			ea := make([]entry, 0)
+			ea = append(ea, e)
+			fldMap[e.tag] = ea
+		} else {
+			v = append(v, e)
+			fldMap[e.tag] = v
+		}
 		dir = append(dir, e)
 	}
 	return dir
 }
 
-var fldMap = make(map[int]entry)
+var fldMap = make(map[int][]entry)
 
-func (d Directory) entryFor(tag int) entry {
+func (d Directory) entryFor(tag int) []entry {
 	return fldMap[tag]
 }
 
-func (d Directory) FldLen(tag int) int {
-	entry := d.entryFor(tag)
-	return entry.fldlen
+func (d Directory) FldLen(tag int) []int {
+	entries := d.entryFor(tag)
+	var lenarr = make([]int, len(entries))
+	if len(entries) > 0 {
+		for i := 0; i < len(entries); i++ {
+			lenarr[i] = entries[i].fldlen
+		}
+	}
+	return lenarr
 }
 
-func (d Directory) FldOfs(tag int) int {
-	entry := d.entryFor(tag)
-	return entry.fldofs
+func (d Directory) FldOfs(tag int) []int {
+	entries := d.entryFor(tag)
+	var ofsarr = make([]int, len(entries))
+	if len(entries) > 0 {
+		for i := 0; i < len(entries); i++ {
+			ofsarr[i] = entries[i].fldofs
+		}
+	}
+	return ofsarr
 }

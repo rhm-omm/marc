@@ -18,14 +18,20 @@ func TestFldLen(t *testing.T) {
 	r := data[:i+1]                  // First record, including RT
 	dir := DirFrom(r)                // Build directory
 
-	len001 := dir.FldLen(001)
-	if len001 != 17 {
-		t.Errorf("Expected %d, got %d", 17, len001)
+	lenarr001 := dir.FldLen(001)
+	if len(lenarr001) != 1 {
+		t.Errorf("Nr of 001 flds: expected %d, got %d", 1, len(lenarr001))
+	}
+	if len(lenarr001) == 1 && lenarr001[0] != 17 {
+		t.Errorf("Expected %d, got %d", 17, lenarr001[0])
 	}
 
-	len830 := dir.FldLen(830)
-	if len830 != 36 {
-		t.Errorf("Expected %d, got %d", 36, len830)
+	lenarr830 := dir.FldLen(830)
+	if len(lenarr830) != 1 {
+		t.Errorf("Nr of 830 flds: expected %d, got %d", 1, len(lenarr830))
+	}
+	if len(lenarr830) == 1 && lenarr830[0] != 36 {
+		t.Errorf("Expected %d, got %d", 36, lenarr830[0])
 	}
 }
 
@@ -38,14 +44,19 @@ func TestFldOfs(t *testing.T) {
 	r := data[:i+1]                  // First record, including RT
 	dir := DirFrom(r)                // Build directory
 
-	ofs001 := dir.FldOfs(001)
-	if ofs001 != 0 {
-		t.Errorf("Expected %d, got %d", 0, ofs001)
+	ofsarr001 := dir.FldOfs(001)
+	if len(ofsarr001) != 1 {
+		t.Errorf("Nr of 001 flds: expected %d, got %d", 1, len(ofsarr001))
+	}
+	if len(ofsarr001) == 1 && ofsarr001[0] != 0 {
+		t.Errorf("Expected %d, got %d", 0, ofsarr001[0])
 	}
 
-	ofs830 := dir.FldOfs(830)
-	if ofs830 != 3482 {
-		t.Errorf("Expected %d, got %d", 3482, ofs830)
+	ofsarr830 := dir.FldOfs(830)
+	if len(ofsarr830) != 1 {
+		t.Errorf("Nr of 830 flds: expected %d, got %d", 1, len(ofsarr830))
 	}
-
+	if len(ofsarr830) == 1 && ofsarr830[0] != 3482 {
+		t.Errorf("Expected %d, got %d", 3482, ofsarr830[0])
+	}
 }
