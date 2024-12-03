@@ -19,6 +19,7 @@ func main() {
 	i := bytes.IndexByte(data, 0x1d) // Locate first record terminator (RT)
 	r := data[:i+1]                  // First record, including RT
 	dir := directory.DirFrom(r)      // Build directory
+	fmt.Println(len(dir))
 
 	lenarr001 := dir.FldLen(001)
 	fmt.Printf("Nr of 001 flds: %d\n", len(lenarr001))

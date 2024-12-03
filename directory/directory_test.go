@@ -17,6 +17,9 @@ func TestFldLen(t *testing.T) {
 	i := bytes.IndexByte(data, 0x1d) // Locate first record terminator (RT)
 	r := data[:i+1]                  // First record, including RT
 	dir := DirFrom(r)                // Build directory
+	if len(dir) != 47 {
+		t.Errorf("Nr of flds: expected 47, got %d", len(dir))
+	}
 
 	lenarr001 := dir.FldLen(001)
 	if len(lenarr001) != 1 {
