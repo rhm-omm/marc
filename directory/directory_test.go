@@ -21,7 +21,7 @@ func TestFldLen(t *testing.T) {
 		t.Errorf("Nr of flds: expected 47, got %d", len(dir))
 	}
 
-	lenarr001 := dir.FldLen(001)
+	lenarr001 := dir.Fldlen(001)
 	if len(lenarr001) != 1 {
 		t.Errorf("Nr of 001 flds: expected %d, got %d", 1, len(lenarr001))
 	}
@@ -29,7 +29,7 @@ func TestFldLen(t *testing.T) {
 		t.Errorf("Expected %d, got %d", 17, lenarr001[0])
 	}
 
-	lenarr830 := dir.FldLen(830)
+	lenarr830 := dir.Fldlen(830)
 	if len(lenarr830) != 1 {
 		t.Errorf("Nr of 830 flds: expected %d, got %d", 1, len(lenarr830))
 	}
