@@ -45,7 +45,7 @@ func (cf CtrlFld) TagOf() int {
 	return cf.Tag
 }
 
-// Return a field's value as a string
+// Return a field's value as a string w/ FT
 func (cf CtrlFld) ValueOf() string {
 	return string(cf.Value)
 }
