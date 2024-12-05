@@ -1,9 +1,6 @@
 package ctrlfld
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/rhm-omm/marc/directory"
 	"github.com/rhm-omm/marc/ldr"
 )
@@ -11,26 +8,35 @@ import (
 // MARC control field. Lacks indicators and subfields
 type CtrlFld struct {
 	Tag   int
-	Value []byte // Stripped of field terminator
+	Value []byte // Including FT
 }
 
-func CtrlFldFrom(tag int, MARCrec []byte) []CtrlFld {
-	if tag < 0 || tag >= 10 {
-		fmt.Println("Not a control field tag")
-		os.Exit(1)
-	}
+func CtrlFldFrom(MARCrec []byte) []CtrlFld {
 
 	l := ldr.LdrFrom(MARCrec)
-	base := l.BaseAddr()
+	baseAdrr := l.BaseAddr()
 	d := directory.DirFrom(MARCrec)
-	ea := d.EntryFor(tag)
-	cfa := make([]CtrlFld, len(ea))
-	for i := 0; i < len(ea); i++ {
-		value := MARCrec[base+ea[i].Fldofs : base+ea[i].Fldofs+ea[i].Fldlen-1] // Omit field terminator
-		cfa[i].Tag = tag
-		cfa[i].Value = value
+	cfa := make([]CtrlFld, 0, len(d))
+	for _, e := range d {
+		if e.Tag < 10 {
+			var cf CtrlFld
+			cf.Tag = e.Tag
+			v := MARCrec[baseAdrr+e.Fldofs : baseAdrr+e.Fldofs+e.Fldlen] // Include FT
+			cf.Value = v
+			cfa = append(cfa, cf)
+		}
 	}
-	cfMap[tag] = cfa
+	return cfa
+}
+
+func CtrlFldNrFrom(tag int, MARCrec []byte) []CtrlFld {
+	allCf := CtrlFldFrom(MARCrec)
+	cfa := make([]CtrlFld, 0, len(allCf))
+	for _, cf := range allCf {
+		if cf.Tag == tag {
+			cfa = append(cfa, cf)
+		}
+	}
 	return cfa
 }
 
@@ -42,16 +48,4 @@ func (cf CtrlFld) TagOf() int {
 // Return a field's value as a string
 func (cf CtrlFld) ValueOf() string {
 	return string(cf.Value)
-}
-
-// Map tags to values
-var cfMap = make(map[int][]CtrlFld)
-
-// Return the control field with a specified tag
-func FldWithTag(tag int) []CtrlFld {
-	if tag < 0 || tag >= 10 {
-		fmt.Println("Not a control field tag")
-		os.Exit(1)
-	}
-	return cfMap[tag]
 }
