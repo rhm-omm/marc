@@ -20,12 +20,12 @@ func DirFrom(rawMARC []byte) Directory {
 	// Get base address from leader
 	l := ldr.LdrFrom(rawMARC)
 	baseAddr := l.BaseAddr()
-	// Create the slice that contains the directory
-	dirSrc := rawMARC[24:baseAddr]
+	// Create the slice that contains the directory w/o FT
+	dirSrc := rawMARC[24 : baseAddr-1]
 	// Create Directory vbl
 	var dir Directory
 	// Loop through the bytes, filling out the entry struct
-	for i := 0; i < len(dirSrc)-1; i += 12 {
+	for i := 0; i < len(dirSrc); i += 12 {
 		var e Entry
 		t, err := strconv.Atoi(string(dirSrc[i : i+3]))
 		if err != nil {

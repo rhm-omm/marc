@@ -15,7 +15,7 @@ func TestFldLen(t *testing.T) {
 		log.Fatal(err)
 	}
 	i := bytes.IndexByte(data, 0x1d) // Locate first record terminator (RT)
-	r := data[:i+1]                  // First record, including RT
+	r := data[:i]                    // First record, w/o RT
 	dir := DirFrom(r)                // Build directory
 	if len(dir) != 47 {
 		t.Errorf("Nr of flds: expected 47, got %d", len(dir))
@@ -44,7 +44,7 @@ func TestFldOfs(t *testing.T) {
 		log.Fatal(err)
 	}
 	i := bytes.IndexByte(data, 0x1d) // Locate first record terminator (RT)
-	r := data[:i+1]                  // First record, including RT
+	r := data[:i]                    // First record, w/o RT
 	dir := DirFrom(r)                // Build directory
 
 	ofsarr001 := dir.FldOfs(001)
