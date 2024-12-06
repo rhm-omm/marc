@@ -35,7 +35,7 @@ func TestCtrlFldNrFrom(t *testing.T) {
 		t.Errorf("Nr of 008 flds: expected 1, got %d", len(cfa))
 	}
 	v008 := cfa[0].ValueOf()
-	if len(v008) != 39 {
-		t.Errorf("Len of 008 fld w/ FT: expected 39, got %d", len(v008))
+	if len(v008) != 38 {
+		t.Errorf("Len of 008 fld w/ FT: expected 38, got %d", len(v008))
 	}
 }

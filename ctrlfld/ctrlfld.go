@@ -8,7 +8,7 @@ import (
 // MARC control field. Lacks indicators and subfields
 type CtrlFld struct {
 	Tag   int
-	Value []byte // Including FT
+	Value string
 }
 
 func CtrlFldFrom(MARCrec []byte) []CtrlFld {
@@ -21,8 +21,8 @@ func CtrlFldFrom(MARCrec []byte) []CtrlFld {
 		if e.Tag < 10 {
 			var cf CtrlFld
 			cf.Tag = e.Tag
-			v := MARCrec[baseAdrr+e.Fldofs : baseAdrr+e.Fldofs+e.Fldlen] // Include FT
-			cf.Value = v
+			v := MARCrec[baseAdrr+e.Fldofs : baseAdrr+e.Fldofs+e.Fldlen-1]
+			cf.Value = string(v)
 			cfa = append(cfa, cf)
 		}
 	}
@@ -47,5 +47,5 @@ func (cf CtrlFld) TagOf() int {
 
 // Return a field's value as a string w/ FT
 func (cf CtrlFld) ValueOf() string {
-	return string(cf.Value)
+	return cf.Value
 }

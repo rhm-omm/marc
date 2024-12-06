@@ -23,6 +23,6 @@ func main() {
 	for _, cf := range cfa {
 		fmt.Print(cf.TagOf(), ": ")
 		lv := len(cf.ValueOf())
-		fmt.Println(cf.ValueOf()[:lv-1], " ", lv)
+		fmt.Println(cf.ValueOf(), " ", lv)
 	}
 }
