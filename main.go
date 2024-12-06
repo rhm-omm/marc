@@ -17,7 +17,7 @@ func main() {
 		log.Fatal(err)
 	}
 	i := bytes.IndexByte(data, 0x1d) // Locate first record terminator (RT)
-	r := data[:i]                    // First record
+	r := data[:i]                    // First record, w/o RT
 
 	cfa := ctrlfld.CtrlFldFrom(r)
 	for _, cf := range cfa {
